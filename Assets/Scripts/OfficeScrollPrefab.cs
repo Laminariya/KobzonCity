@@ -20,7 +20,7 @@ public class OfficeScrollPrefab : MonoBehaviour
     {
         _floor = floor;
         _office = office;
-        Debug.Log(_floor + ", " + _office);
+        //Debug.Log(_floor + ", " + _office);
         Button.onClick.AddListener(OnClick);
         Plan.sprite = GameManager.instance.mainPanel.Floors[floor].OfficeClasses[office-1].OfficeSprite;
         Area.text = GameManager.instance.mainPanel.Floors[floor].OfficeClasses[office - 1].Area.ToString() + " м" +
@@ -37,7 +37,7 @@ public class OfficeScrollPrefab : MonoBehaviour
 
     private void OnClick()
     {
-        Debug.Log("OnClick");
+        //Debug.Log("OnClick");
         GameManager.instance.officePanel.Show(_floor, _office);
     }
 

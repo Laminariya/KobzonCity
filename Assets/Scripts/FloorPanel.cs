@@ -62,6 +62,9 @@ public class FloorPanel : MonoBehaviour
             office.GetComponent<OfficeScrollPrefab>().Init(floor, officeClass.Number);
             _officesPrefabs.Add(office);
         }
+        
+        _manager.MessageOffAllLight();
+        _manager.MessageOnFloor(1,1,floor+1);
     }
 
     public void Hide()

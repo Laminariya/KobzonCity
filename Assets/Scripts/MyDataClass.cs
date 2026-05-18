@@ -9,7 +9,6 @@ public class MyDataClass : MonoBehaviour
     
     private GameManager _manager;
     private MyData _myData;
-    private string _nameJK = "Шкиперский 19";
 
     public void Init()
     {

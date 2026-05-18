@@ -42,7 +42,7 @@ public class BluetoothManager : MonoBehaviour
     {
         //_sendCom = FindObjectOfType<SendComPort>(true);
         //_sendCom.Init();
-        Debug.LogWarning("Bluetooth Manager");
+        //Debug.LogWarning("Bluetooth Manager");
         MenuPanel.SetActive(false);
         InitBluetooth();
         _countError = 0;
@@ -50,10 +50,10 @@ public class BluetoothManager : MonoBehaviour
         b_GetPairedDevices.onClick.AddListener(GetPairedDevices);
         BluetoothName.text = "";
 
-        // if (PlayerPrefs.HasKey(_keyMac))
-        // {
-        //     OnClickConnect(PlayerPrefs.GetString(_keyMac));
-        // }
+        if (PlayerPrefs.HasKey(_keyMac))
+        {
+            OnClickConnect(PlayerPrefs.GetString(_keyMac));
+        }
 
         _timer = 0;
         //GetPairedDevices();

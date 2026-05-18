@@ -46,13 +46,13 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        LoadContent();
+        _ = LoadContent();
     }
     
     private async Task LoadContent()
     {
         loadPanel.SetActive(true);
-        InfoStartPanel.text = "Load Feed...";
+        InfoStartPanel.text = "Load Feed..."+"\r\n";
         
         serializeXML = FindObjectOfType<SerializeXML>(true);
         myDataClass = FindObjectOfType<MyDataClass>(true);
@@ -61,17 +61,18 @@ public class GameManager : MonoBehaviour
         floorPanel = FindObjectOfType<FloorPanel>(true);
         officePanel = FindObjectOfType<OfficePanel>(true);
         
+        InfoStartPanel.text += "Load Feed2..."+"\r\n";
         await serializeXML.Init(this);
-        
+        InfoStartPanel.text += "Load Feed3..."+"\r\n";
         myDataClass.Init();
         mainPanel.Init(this);
         floorPanel.Init(this);
         officePanel.Init(this);
         
-       Debug.Log("XXX");
+        Debug.Log("XXX");
         StartCoroutine(StartGame());
         Debug.Log("XXX2");
-
+        InfoStartPanel.text += "Load Feed4..."+"\r\n";
         // int countFlat = 0;
         // int countFloor = 0;
         // foreach (var building in MyData.Buildings)
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         
         bluetoothManager.MenuPanel.SetActive(true);
         bluetoothManager.GetPairedDevices();
+        InfoStartPanel.text += "Load Feed5..."+"\r\n";
     }
 
     IEnumerator StartGame()

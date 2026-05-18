@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using System.Xml.Serialization;
 using UnityEditor;
+using UnityEngine.Networking;
 using UnityEngine.Serialization;
 
 public class SerializeXML : MonoBehaviour
@@ -19,6 +20,7 @@ public class SerializeXML : MonoBehaviour
     
     //ссылка на json
     private string _url = "https://feeds.setevie.su/feeds/october/kobzon_cian.xml";
+    //private string _url = "https://feed.storage-s3.ru/feed_flat_regions_new.xml";
     private GameManager _manager;
     
     
@@ -31,9 +33,20 @@ public class SerializeXML : MonoBehaviour
     private async Task LoadJSON(string url)
     {
         var uri = new Uri(url);
-
-        var result = await Client.GetAsync(uri);
+        _manager.InfoStartPanel.text += "Load Json4..."+"\r\n";
+        using var result = await Client.GetAsync(_url);
+        _manager.InfoStartPanel.text += "Load Json5..."+"\r\n";
         string str = await result.Content.ReadAsStringAsync();
+        _manager.InfoStartPanel.text += "Load Json6..."+"\r\n";
+
+        // using (UnityWebRequest request = UnityWebRequest.PostWwwForm(_url,""))
+        // {
+        //     request.SetRequestHeader("Content-Type", "application/json");
+        //     request.timeout = 5;
+        //     
+        //     
+        // }
+        
         
         XmlSerializer serializer = new XmlSerializer(typeof(FeedClass));
         
@@ -42,33 +55,35 @@ public class SerializeXML : MonoBehaviour
             Debug.Log("CC");
             try
             {
+                _manager.InfoStartPanel.text += "Load Json1..."+"\r\n";
                 Debug.Log("Try");
                 _feedClass = (FeedClass)serializer.Deserialize(reader);
             }
             catch (Exception e)
             {
+                _manager.InfoStartPanel.text += "Load Json2..."+"\r\n";
                 Debug.Log(e);
                 throw;
             }
 
             GameManager.instance.Feed = _feedClass;
             Debug.Log("XX "+_feedClass.Objects.Count);
-             foreach (var obj in _feedClass.Objects)
-             {
-                 try
-                 {
-                     Debug.Log(obj.FloorNumber + " " + obj.TotalArea + " " + obj.BargainTerms.Price + " "+ obj.JKSchema.House.Flat.FlatNumber);
-                 }
-                 catch (Exception e)
-                 {
-                     Debug.Log(e);
-                 }
-                
-             }
+             // foreach (var obj in _feedClass.Objects)
+             // {
+             //     try
+             //     {
+             //         Debug.Log(obj.FloorNumber + " " + obj.TotalArea + " " + obj.BargainTerms.Price + " "+ obj.JKSchema.House.Flat.FlatNumber);
+             //     }
+             //     catch (Exception e)
+             //     {
+             //         Debug.Log(e);
+             //     }
+             //    
+             // }
             reader.Close();
         }
 
-        _manager.InfoStartPanel.text += "\r\nLoad Feed Complete";
+        _manager.InfoStartPanel.text += "\r\nLoad Feed Complete"+"\r\n";
         result.Dispose();
         serializer = null;
 

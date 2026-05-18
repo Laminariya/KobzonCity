@@ -64,6 +64,7 @@ public class MainPanel : MonoBehaviour
         _currentFloor = floor;
         ChangeFloor(_currentFloor);
         _manager.MessageOffAllLight();
+        _manager.MessageOnDemo();
     }
 
     private void OnUp()
@@ -89,7 +90,6 @@ public class MainPanel : MonoBehaviour
     private void OnNext()
     {
         _manager.floorPanel.Show(_currentFloor);
-        _manager.MessageOnFlat(1,1,1);
     }
 
     private void ChangeFloor(int floor)
@@ -115,7 +115,9 @@ public class MainPanel : MonoBehaviour
                             _manager.SymvolQuadro;
 
         }
-
+        
+        _manager.MessageOffAllLight();
+        _manager.MessageOnFloor(1,1,floor+1);
     }
 
 
