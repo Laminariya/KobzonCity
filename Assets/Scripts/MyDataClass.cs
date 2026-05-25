@@ -33,14 +33,14 @@ public class MyDataClass : MonoBehaviour
         build.BuildingName = build.MyObjects[0].BuioldingName;
         build.BuildingSection = build.MyObjects[0].BuioldingSection;
         _myData.Buildings.Add(build);
-        Debug.Log("Create My Data 1");
+        //Debug.Log("Create My Data 1");
         int countFloor = _myData.Buildings[0].MyObjects[0].CountFloor;
-        Debug.Log("Create My Data 2");
+        //Debug.Log("Create My Data 2");
         for (int i = 0; i < countFloor; i++)
         {
             MyFloor floor = new MyFloor();
             _myData.Buildings[0].MyFloors.Add(floor);
-            Debug.Log("Create My Data 4");
+            //Debug.Log("Create My Data 4");
             int price = int.MaxValue;
             float minArea = int.MaxValue;
             float maxArea = 0;
@@ -49,7 +49,7 @@ public class MyDataClass : MonoBehaviour
                 if (myObject.Floor == i + 1)
                 {
                     floor.MyObjects.Add(myObject);
-                    Debug.Log("Create My Data 5");
+                    //Debug.Log("Create My Data 5");
                     if(myObject.Price<price) price = myObject.Price;
                     floor.MinPrice = price;
                     if(myObject.Area<minArea) minArea = myObject.Area;

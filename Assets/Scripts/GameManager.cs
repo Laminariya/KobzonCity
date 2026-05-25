@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public MainPanel mainPanel;
     [HideInInspector] public FloorPanel floorPanel;
     [HideInInspector] public OfficePanel officePanel;
+    [HideInInspector] public AllChosePanel allChosePanel;
 
     public GameObject loadPanel;
     public TMP_Text InfoStartPanel;
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour
         mainPanel = FindObjectOfType<MainPanel>(true);
         floorPanel = FindObjectOfType<FloorPanel>(true);
         officePanel = FindObjectOfType<OfficePanel>(true);
+        allChosePanel = FindObjectOfType<AllChosePanel>(true);
         
         InfoStartPanel.text += "Load Feed2..."+"\r\n";
         await serializeXML.Init(this);
@@ -68,6 +70,7 @@ public class GameManager : MonoBehaviour
         mainPanel.Init(this);
         floorPanel.Init(this);
         officePanel.Init(this);
+        allChosePanel.Init();
         
         Debug.Log("XXX");
         StartCoroutine(StartGame());
@@ -163,7 +166,7 @@ public class GameManager : MonoBehaviour
 
     public void MessageOnFloor(int house, int porch, int floor)
     {
-       /* if (floor == 0)
+        if (floor == 0)
         {
             bluetoothManager.AddMessage("010A020E00000100");
             return;
@@ -172,7 +175,7 @@ public class GameManager : MonoBehaviour
         {
             bluetoothManager.AddMessage("010A020E00000200");
             return;
-        }*/
+        }
 
         //HH03SSXX03000000
         string str = house.ToString("X");
@@ -195,6 +198,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Mess OffAll");
         //LOg.text += "007F060100000000" + "\r\n";
         bluetoothManager.AddMessage("007F060100000000"); //Погасить всё!!!
+        mainPanel.OffLightKorpus();
     }
 
     public void MessageOnDemo()

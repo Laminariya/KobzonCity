@@ -38,7 +38,7 @@ public class OfficeButtonClass : MonoBehaviour
 
     private void OnNext()
     {
-        GameManager.instance.officePanel.Show(_floor, _office+1);
+        GameManager.instance.officePanel.Show(_floor, _office+1, null);
     }
 
 

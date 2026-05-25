@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,8 +22,12 @@ public class MainPanel : MonoBehaviour
     public Button b_Up;
     public Button b_Down;
     public Button b_Next;
+    public Button b_LightKorpus;
+    public Color OnColor;
+    public Button b_ChosePanel;
     
     private int _currentFloor = 0;
+    private Color _offColor;
     
     public void Init(GameManager manager)
     {
@@ -31,6 +36,9 @@ public class MainPanel : MonoBehaviour
         b_Up.onClick.AddListener(OnUp);
         b_Down.onClick.AddListener(OnDown);
         b_Next.onClick.AddListener(OnNext);
+        b_LightKorpus.onClick.AddListener(OnLightKorpus);
+        b_ChosePanel.onClick.AddListener(OnChosePanel);
+        _offColor = b_LightKorpus.image.color;
         
         for (int i = 0; i < Floors.Count; i++)
         {
@@ -43,6 +51,8 @@ public class MainPanel : MonoBehaviour
                         if (myObject.Number == officeClass.Number)
                         {
                             officeClass.MyObject = myObject;
+                            officeClass.Floor = i + 1;
+                            officeClass.Init();
                         }
                     }
                     else
@@ -50,6 +60,8 @@ public class MainPanel : MonoBehaviour
                         if (Mathf.Approximately(myObject.Area, officeClass.Area))
                         {
                             officeClass.MyObject = myObject;
+                            officeClass.Floor = i + 1;
+                            officeClass.Init();
                         }
                     }
                 }
@@ -120,6 +132,29 @@ public class MainPanel : MonoBehaviour
         _manager.MessageOnFloor(1,1,floor+1);
     }
 
+    private void OnLightKorpus()
+    {
+        if (b_LightKorpus.image.color != _offColor)
+        {
+            _manager.MessageOffAllLight();
+            OffLightKorpus();
+            return;
+        }
+
+        _manager.MessageOnHouse(1,1);
+        b_LightKorpus.image.color = OnColor;
+    }
+    
+    public void OffLightKorpus()
+    {
+        b_LightKorpus.image.color = _offColor;
+    }
+
+    private void OnChosePanel()
+    {
+        _manager.allChosePanel.Show();
+    }
+
 
 }
 
@@ -143,4 +178,24 @@ public class OfficeClass
     public int Number;
     [HideInInspector] public MyObject MyObject = null;
     public int People;
+    public string ChosenText = "";
+    [HideInInspector] public int Floor;
+
+    private string key;
+
+    public void Init()
+    {
+        key = Floor + "." + Number;
+        
+        if (PlayerPrefs.HasKey(key))
+        {
+            ChosenText = PlayerPrefs.GetString(key);
+        }
+    }
+
+    public void SaveChosenText(string text)
+    {
+        ChosenText = text;
+        PlayerPrefs.SetString(key, text);
+    }
 }
