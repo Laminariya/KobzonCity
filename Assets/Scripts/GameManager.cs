@@ -163,6 +163,17 @@ public class GameManager : MonoBehaviour
 
     public void MessageOnFloor(int house, int porch, int floor)
     {
+       /* if (floor == 0)
+        {
+            bluetoothManager.AddMessage("010A020E00000100");
+            return;
+        }
+        if (floor == 1)
+        {
+            bluetoothManager.AddMessage("010A020E00000200");
+            return;
+        }*/
+
         //HH03SSXX03000000
         string str = house.ToString("X");
         if(str.Length==1) str = "0" + str;
@@ -173,19 +184,23 @@ public class GameManager : MonoBehaviour
         string s = porch.ToString("X");
         if (s.Length == 1) s = "0" + s;
         str += s + "03000000";
-        Debug.Log("Mess Floor");
+        Debug.Log("Mess Floor " +str);
+        //LOg.text += str + "\r\n";
+        bluetoothManager.AddMessage(str) ;
         //sendComPort.AddMessage(str);
     }
 
     public void MessageOffAllLight()
     {
         Debug.Log("Mess OffAll");
+        //LOg.text += "007F060100000000" + "\r\n";
         bluetoothManager.AddMessage("007F060100000000"); //Погасить всё!!!
     }
 
     public void MessageOnDemo()
     {
         Debug.Log("Mess Demo");
+        //LOg.text += "007F060100000000" + "\r\n";
         bluetoothManager.AddMessage("0064010000000000"); //Включить демо!
     }
 
