@@ -24,6 +24,7 @@ public class BluetoothManager : MonoBehaviour
     public GameObject deviceMACText;
     private bool isConnected;
     public TMP_Text StatusDevice;
+    public Button b_Disconected;
 
     private static AndroidJavaClass unity3dbluetoothplugin;
     private static AndroidJavaObject BluetoothConnector;
@@ -43,6 +44,7 @@ public class BluetoothManager : MonoBehaviour
         //_sendCom = FindObjectOfType<SendComPort>(true);
         //_sendCom.Init();
         //Debug.LogWarning("Bluetooth Manager");
+        b_Disconected.onClick.AddListener(StopConnection);
         MenuPanel.SetActive(false);
         InitBluetooth();
         _countError = 0;

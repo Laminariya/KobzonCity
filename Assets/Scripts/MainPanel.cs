@@ -25,9 +25,12 @@ public class MainPanel : MonoBehaviour
     public Button b_LightKorpus;
     public Color OnColor;
     public Button b_ChosePanel;
+    public Button b_OpenBLE;
     
     private int _currentFloor = 0;
     private Color _offColor;
+    private int _countClick = 0;
+    private float _timer = 0;
     
     public void Init(GameManager manager)
     {
@@ -38,7 +41,10 @@ public class MainPanel : MonoBehaviour
         b_Next.onClick.AddListener(OnNext);
         b_LightKorpus.onClick.AddListener(OnLightKorpus);
         b_ChosePanel.onClick.AddListener(OnChosePanel);
+        b_OpenBLE.onClick.AddListener(OnOpenBLE);
         _offColor = b_LightKorpus.image.color;
+        
+        _countClick = 0;
         
         for (int i = 0; i < Floors.Count; i++)
         {
@@ -69,6 +75,24 @@ public class MainPanel : MonoBehaviour
         }
         
         ChangeFloor(_currentFloor);
+    }
+
+    private void Update()
+    {
+        if (Time.time - _timer > 1.0f)
+        {
+            _countClick = 0;
+        }
+    }
+
+    private void OnOpenBLE()
+    {
+        _countClick++;
+        _timer = Time.time;
+        if (_countClick >= 4)
+        {
+            _manager.bluetoothManager.MenuPanel.SetActive(true);
+        }
     }
 
     public void Show(int floor)
